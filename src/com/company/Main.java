@@ -3,34 +3,124 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-
+    public static boolean tryParseInt(String value) {
+        try {
+            Integer.parseInt(value);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
     public static void main(String[] args) throws IOException, NullPointerException {
         Scanner sf = new Scanner(new File("scores2.txt"));
-        String txt[] = new String[2000];
+        List<Integer> scores = new ArrayList<>();
+        List<String> Schools = new ArrayList<>();
+        int math;
+        int reading;
+        int writing;
+        int averages;
 
-        int line = 0;
-        int maxIndx = -1;
+        int skippedSchools = 0;
 
-        while (sf.hasNext()) {
-            maxIndx++;
-            txt[maxIndx] = sf.nextLine();
+        sf.nextLine();
+        while (sf.hasNextLine()) {
+            String SATScore = sf.nextLine();
+
+            String[] temp = SATScore.split("\\t");
+
+
+            Schools.add(temp[1]);
+
+            if (temp.length > 19) {
+
+                if (tryParseInt(temp[18]) && tryParseInt(temp[19]) && tryParseInt(temp[20])){
+                    math = Integer.parseInt(temp[18]);
+                    reading = Integer.parseInt(temp[19]);
+                    writing = Integer.parseInt(temp[20]);
+                    averages = math + reading + writing;
+
+                    scores.add(averages);}
+                else
+                    skippedSchools++;
+            }
         }
 
-        Read[] ourDoc = new Read[maxIndx];
-
-        for (int i = 1; i < ourDoc.length; i++){
-            ourDoc[i] = new Read(txt[i]);
+        System.out.println("Average SAT Scores:");
+        for (int i = 0; i < scores.size(); i++)
+        {
+            System.out.println(Schools.get(i) + ": " + scores.get(i));
         }
 
-        sf.close();
+        int top1 = 0, top1Tie = 0, top2 = 0, top2Tie = 0, top3Tie = 0, top3 = 0;
+        int top1index = 0, top1TieIndex = 0, top2index = 0, top2TieIndex = 0, top3index = 0,
+        top3TieIndex = 0;
+        for (int i = 0; i < scores.size(); i++)
+        {
+            int a = scores.get(i);
+            if (a > top1)
+            {
+                top3 = top2;
+                top2 = top1;
+                top1 = a;
+                top1index = i;
 
-        double totalAverages = 0;
-        for(int i = 1; i < ourDoc.length;i++){
-            totalAverages += ourDoc[i].averages;
+            }
+            else if (top1 == a){
+                top1Tie = a;
+                top1TieIndex = i;
+
+            }
+            else if (a > top2)
+            {
+                top3 = top2;
+                top2 = a;
+                top2index = i;
+            }
+            else if (top2 == a){
+                top2Tie = a;
+                top2TieIndex = i;
+            }
+            else if (a > top3)
+            {
+                top3 = a;
+                top3index = i;
+            }
+            else if (top3 == a){
+                top3Tie = a;
+                top3TieIndex = i;
+            }
 
         }
-        System.out.println(ourDoc[4].averages);
-       // totalAverages = totalAverages / ourDoc[].getTotalAverage();
-        System.out.println("The average SAT score in the city of New York is: " + totalAverages);
+
+        System.out.println();
+        System.out.println("Top three schools:");
+        if (top1 == top1Tie){
+            System.out.println("#1 - " + Schools.get(top1index + 17) + ": " + scores.get(top1index) + " & "
+                + Schools.get(top1TieIndex + 17) + ": " + scores.get(top1TieIndex));}
+        else {
+            System.out.println("#1 - " + Schools.get(top1index + 17) + ": " + scores.get(top1index));
+        }
+        if (top2 == top2Tie){
+        System.out.println("#2 - " + Schools.get(top2index + 17) + ": " + scores.get(top2index)
+        + " & " + Schools.get(top2TieIndex + 17) + ": " + scores.get(top2TieIndex));}
+        else {
+            System.out.println("#2 - " + Schools.get(top2index + 17) + ": " + scores.get(top2index));
+        }
+        if (top3 == top3Tie){
+        System.out.println("#3 - " + Schools.get(top3index + 17) + ": " + scores.get(top3index)
+                + " & " + Schools.get(top3TieIndex + 17) + ": " + scores.get(top3TieIndex));}
+        else {
+            System.out.println("#3 - " + Schools.get(top3index + 17) + ": " + scores.get(top3index));
+        }
+
+
+        int total = 0;
+        for (int i : scores)
+        {
+            total += i;
+        }
+        System.out.println();
+        System.out.println("State average: " + total / (scores.size() - skippedSchools));
+
     }
 }
