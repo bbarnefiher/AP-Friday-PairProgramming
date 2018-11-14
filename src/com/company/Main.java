@@ -15,6 +15,7 @@ public class Main {
         Scanner sf = new Scanner(new File("scores2.txt"));
         List<Integer> scores = new ArrayList<>();
         List<String> Schools = new ArrayList<>();
+        double average;
         int math;
         int reading;
         int writing;
@@ -116,13 +117,13 @@ public class Main {
         }
 
 
-        int total = 0;
-        for (int i : scores)
+        double total = 0;
+        for (int i = 0; i < scores.size(); i++)
         {
-            total += i;
+            total += scores.get(i);
         }
         System.out.println();
-        System.out.println("State average: " + total / (scores.size() - skippedSchools));
-
+        average = total / (scores.size() );
+        System.out.println("State average: " + average);
     }
 }
