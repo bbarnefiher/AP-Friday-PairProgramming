@@ -29,7 +29,7 @@ public class Main {
             String[] temp = SATScore.split("\\t");
 
 
-            Schools.add(temp[1]);
+
 
             if (temp.length > 19) {
 
@@ -39,7 +39,9 @@ public class Main {
                     writing = Integer.parseInt(temp[20]);
                     averages = math + reading + writing;
 
-                    scores.add(averages);}
+                    scores.add(averages);
+                    Schools.add(temp[1]);
+                }
                 else
                     skippedSchools++;
             }
@@ -95,22 +97,22 @@ public class Main {
         System.out.println();
         System.out.println("Top three schools:");
         if (top1 == top1Tie){
-            System.out.println("#1 - " + Schools.get(top1index + 17) + ": " + scores.get(top1index) + " & "
-                + Schools.get(top1TieIndex + 17) + ": " + scores.get(top1TieIndex));}
+            System.out.println("#1 - " + Schools.get(top1index) + ": " + scores.get(top1index) + " & "
+                + Schools.get(top1TieIndex) + ": " + scores.get(top1TieIndex));}
         else {
-            System.out.println("#1 - " + Schools.get(top1index + 17) + ": " + scores.get(top1index));
+            System.out.println("#1 - " + Schools.get(top1index) + ": " + scores.get(top1index));
         }
         if (top2 == top2Tie){
-        System.out.println("#2 - " + Schools.get(top2index + 17) + ": " + scores.get(top2index)
-        + " & " + Schools.get(top2TieIndex + 17) + ": " + scores.get(top2TieIndex));}
+        System.out.println("#2 - " + Schools.get(top2index) + ": " + scores.get(top2index)
+        + " & " + Schools.get(top2TieIndex) + ": " + scores.get(top2TieIndex));}
         else {
-            System.out.println("#2 - " + Schools.get(top2index + 17) + ": " + scores.get(top2index));
+            System.out.println("#2 - " + Schools.get(top2index) + ": " + scores.get(top2index));
         }
         if (top3 == top3Tie){
-        System.out.println("#3 - " + Schools.get(top3index + 17) + ": " + scores.get(top3index)
-                + " & " + Schools.get(top3TieIndex + 17) + ": " + scores.get(top3TieIndex));}
+        System.out.println("#3 - " + Schools.get(top3index) + ": " + scores.get(top3index)
+                + " & " + Schools.get(top3TieIndex) + ": " + scores.get(top3TieIndex));}
         else {
-            System.out.println("#3 - " + Schools.get(top3index + 17) + ": " + scores.get(top3index));
+            System.out.println("#3 - " + Schools.get(top3index) + ": " + scores.get(top3index));
         }
 
 
